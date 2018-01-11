@@ -1,29 +1,41 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
+import './app.css';
 import CandlestickChart from './components/candlestick_chart'
 
+import ChartList from './containers/chart-list'
+
 class App extends React.Component {
-  componentDidMount(){
-    var url="http://localhost:3000/"
+  constructor(props) {
+    super(props);
+    this.update = this.update.bind(this);
+
+    this.state = {
+      charts: [],
+    }
+  }
+
+  componentWillMount() {
+    let url="http://localhost:3000/";
+    const doUpdate = this.update;
+
     fetch(url).then(function(response){
-        return response.json();
+      return response.json();
     }).then(function(data){
-      this.update(data)
+      doUpdate(data)
     });
   }
 
-  update(state){
+  update(data) {
     this.setState({
-
+      charts: data
     })
   }
 
   render() {
     return (
-
-      <div>
+      <div className='container'>
         <CandlestickChart />
-          Hello World!
+        <ChartList charts={this.state.charts}/>
       </div>
     );
   }

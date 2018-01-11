@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import ActiveChart from './active_chart'
+import ActiveChart from './reducer_active_chart'
 
 const rootReducer = combineReducers({
   activeChart: ActiveChart
