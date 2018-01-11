@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CandlestickChart from './components/candlestick_chart'
 
 class App extends React.Component {
   componentDidMount(){
@@ -11,13 +11,22 @@ class App extends React.Component {
       this.update(data)
     });
   }
+
+  update(state){
+    this.setState({
+
+    })
+  }
+
   render() {
     return (
+
       <div>
+        <CandlestickChart />
           Hello World!
       </div>
     );
   }
-
 }
+
 export default App
