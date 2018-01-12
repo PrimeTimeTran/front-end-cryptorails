@@ -1,8 +1,7 @@
 import React from 'react';
 import './app.css';
-import CandlestickChart from './components/candlestick_chart'
 
-import ChartList from './containers/chart-list'
+import ChartComponent from './components/chart_component'
 
 class App extends React.Component {
   constructor(props) {
@@ -34,8 +33,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='container'>
-        <CandlestickChart />
-        <ChartList charts={this.state.charts}/>
+        <ChartComponent />
       </div>
     );
   }
