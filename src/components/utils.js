@@ -16,25 +16,25 @@ function parseData(parse) {
 const parseDate = timeParse("%Y-%m-%d");
 
 export function getData() {
-	// const promiseMSFT = fetch("//rrag.github.io/react-stockcharts/data/MSFT.tsv")
-	// 	.then(response => response.text())
-	// 	.then(data => tsvParse(data, parseData(parseDate)))
-	// return promiseMSFT;
+	const promiseMSFT = fetch("//github.com/PrimeTimeTran/front-end-cryptorails/blob/master/src/prices.tsv?raw=true")
+		.then(response => response.text())
+		.then(data => tsvParse(data, parseData(parseDate)))
+	return promiseMSFT;
 
 
 	// Way I tried to get it to work with groups of ten, still errored though
-	const promiseMSFT = fetch("http://localhost:3000/")
-		.then(response => response.text())
-		.then(function(data) {
-			var size = 50;
-			var array = []
-			for (var i = 0; i < JSON.parse(data).length; i += size) {
-					var smallarray = JSON.parse(data).slice(i, i + size);
-					array.push(smallarray)
-			}
-			return array
-		})
-		return promiseMSFT;
+	// const promiseMSFT = fetch("http://localhost:3000/")
+	// 	.then(response => response.text())
+	// 	.then(function(data) {
+	// 		var size = 50;
+	// 		var array = []
+	// 		for (var i = 0; i < JSON.parse(data).length; i += size) {
+	// 				var smallarray = JSON.parse(data).slice(i, i + size);
+	// 				array.push(smallarray)
+	// 		}
+	// 		return array
+	// 	})
+	// 	return promiseMSFT;
 }
 
 
