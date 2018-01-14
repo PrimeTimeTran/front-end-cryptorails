@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import ActionCable from 'actioncable'
 
 import ChartContainer from '../containers/chart_container'
 import FeatureCoin from './feature_coin'
@@ -16,7 +17,20 @@ class App extends Component {
     }
   }
 
+  createSocket() {
+    let cable = ActionCable.createConsumer('ws://localhost:3000/cable');
+    cable.subscriptions.create('PricesChannel', {
+      connected: function() {
+        console.log('Cable Connected!: ', cable)
+      },
+      received: function(data) {
+        console.log('Received data!', data)
+      }
+    });
+  }
+
   componentWillMount() {
+    this.createSocket();
     const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
     const doUpdate = this.update;
 
