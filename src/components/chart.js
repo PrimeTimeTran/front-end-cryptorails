@@ -1,4 +1,3 @@
-
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -37,7 +36,7 @@ class CandleStickChart extends React.Component {
 				<Chart id={1} yExtents={d => [d.high, d.low]}>
 					<XAxis axisAt="bottom" orient="bottom" ticks={5}/>
 					<YAxis axisAt="left" orient="left" ticks={5} />
-					<CandlestickSeries width={timeIntervalBarWidth(utcMinute)}/>
+					<CandlestickSeries width={10}/>
 				</Chart>
 			</ChartCanvas>
 		);

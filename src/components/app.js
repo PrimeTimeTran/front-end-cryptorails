@@ -1,15 +1,16 @@
-import React from 'react';
-import './app.css';
+import React, { Component } from 'react';
 
-import ChartComponent from './components/chart_component'
+import ChartContainer from '../containers/chart_container'
+import FeatureCoin from './feature_coin'
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
-    this.update = this.update.bind(this);
 
+    this.update = this.update.bind(this);
     this.state = {
-      charts: [],
+      prices: [],
+      featureCoin: []
     }
   }
 
@@ -26,14 +27,15 @@ class App extends React.Component {
 
   update(data) {
     this.setState({
-      charts: data
+      prices: data
     })
   }
 
   render() {
     return (
       <div className='container'>
-        <ChartComponent />
+        <ChartContainer />
+        <FeatureCoin name={'Bitcoin'} price={14000}/>
       </div>
     );
   }

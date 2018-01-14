@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import ActiveChart from './reducer_active_chart'
+import PriceReducer from './price_reducer'
 
 const rootReducer = combineReducers({
-  activeChart: ActiveChart
+  prices: PriceReducer
 })
 
 export default rootReducer

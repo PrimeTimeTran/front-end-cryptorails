@@ -4,10 +4,10 @@ import { timeParse } from "d3-time-format";
 function parseData(parse) {
 	return function(d) {
 		d.date = new Date(d.date);
-		d.open = 	d.open;
-		d.high = 	d.high;
-		d.low = 	d.low;
-		d.close = 	d.close;
+		d.open = d.open;
+		d.high = d.high;
+		d.low = d.low;
+		d.close = d.close;
 
 		return d;
 	};
@@ -21,5 +21,3 @@ export function getData() {
 		.then(data => tsvParse(data, parseData(parseDate)))
 	return promiseMSFT;
 }
-
-

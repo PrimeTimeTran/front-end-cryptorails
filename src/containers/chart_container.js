@@ -1,12 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Chart from './chart';
+import Chart from '../components/chart';
 import { getData } from "./utils"
 
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
-
-class ChartComponent extends React.Component {
+class ChartContainer extends React.Component {
 	componentDidMount() {
 		getData().then(data => {
 			this.setState({ data })
@@ -24,4 +23,4 @@ class ChartComponent extends React.Component {
 	}
 }
 
-export default ChartComponent
+export default ChartContainer
