@@ -1,4 +1,4 @@
-import { tsvParse, csvParse } from  "d3-dsv";
+import { tsvParse } from  "d3-dsv";
 import { timeParse } from "d3-time-format";
 
 function parseData(parse) {
@@ -16,7 +16,7 @@ function parseData(parse) {
 const parseDate = timeParse("%Y-%m-%d");
 
 export function getData() {
-	const promiseMSFT = fetch("//raw.githubusercontent.com/PrimeTimeTran/front-end-cryptorails/master/src/components/prices.tsv")
+	const promiseMSFT = fetch("//raw.githubusercontent.com/PrimeTimeTran/front-end-cryptorails/master/src/data/prices.tsv")
 		.then(response => response.text())
 		.then(data => tsvParse(data, parseData(parseDate)))
 	return promiseMSFT;
