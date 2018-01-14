@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import ChartContainer from '../containers/chart_container'
 import FeatureCoin from './feature_coin'
+import { fetchPrices } from '../actions/index'
 
 class App extends Component {
   constructor(props) {
@@ -9,13 +12,12 @@ class App extends Component {
 
     this.update = this.update.bind(this);
     this.state = {
-      prices: [],
       featureCoin: []
     }
   }
 
   componentWillMount() {
-    let url="http://localhost:3000/";
+    const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
     const doUpdate = this.update;
 
     fetch(url).then(function(response){
@@ -27,7 +29,7 @@ class App extends Component {
 
   update(data) {
     this.setState({
-      prices: data
+      featureCoin: data
     })
   }
 
@@ -35,10 +37,20 @@ class App extends Component {
     return (
       <div className='container'>
         <ChartContainer />
-        <FeatureCoin name={'Bitcoin'} price={14000}/>
+        <FeatureCoin featureCoin={this.state.featureCoin.data}/>
       </div>
     );
   }
 }
 
-export default App
+function mapStateToProps(state) {
+  return {
+    featureCoin: state.featureCoin
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ featureCoin: fetchPrices }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
