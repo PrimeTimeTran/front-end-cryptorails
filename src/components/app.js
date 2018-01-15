@@ -17,18 +17,6 @@ class App extends Component {
     }
   }
 
-  createSocket() {
-    let cable = ActionCable.createConsumer('ws://localhost:3000/cable');
-    cable.subscriptions.create('PricesChannel', {
-      connected: function() {
-        console.log('Cable Connected!: ', cable)
-      },
-      received: function(data) {
-        console.log('Received data!', data)
-      }
-    });
-  }
-
   componentWillMount() {
     this.createSocket();
     const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
@@ -38,6 +26,18 @@ class App extends Component {
       return response.json();
     }).then(function(data){
       doUpdate(data)
+    });
+  }
+
+  createSocket() {
+    let cable = ActionCable.createConsumer('ws://localhost:3000/cable');
+    cable.subscriptions.create('PricesChannel', {
+      connected: function() {
+        console.log('Cable Connected!: ', cable)
+      },
+      received: function(data) {
+        console.log('Received data: ', data)
+      }
     });
   }
 
@@ -51,6 +51,7 @@ class App extends Component {
     return (
       <div className='container'>
         <ChartContainer />
+
         <FeatureCoin featureCoin={this.state.featureCoin.data}/>
       </div>
     );
