@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.createSocket();
+    // this.createSocket();
     const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
     const doUpdate = this.update;
 
@@ -35,14 +35,14 @@ class App extends Component {
 
     cable.subscriptions.create('PricesChannel', {
       connected: function() {
-        console.log('Connected::PricesChannel: ', cable)
+        // console.log('Connected::PricesChannel: ', cable)
       },
       received: function(data) {
-        console.log('Received::PricesChannel: ', data)
+        // console.log('Received::PricesChannel: ', data)
         doUpdate(data.html)
       },
       disconnected: function(){
-        console.log('Disconnected::PricesChannel: ');
+        // console.log('Disconnected::PricesChannel: ');
       }
     });
   }
