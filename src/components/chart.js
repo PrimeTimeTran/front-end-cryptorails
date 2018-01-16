@@ -11,7 +11,7 @@ import { last } from "react-stockcharts/lib/utils";
 class CandleStickChart extends React.Component {
 	render() {
     const { type, width, data, ratio } = this.props;
-    const xAccessor = d => new Date(d.date);
+    const xAccessor = d => d.date;
 
     const xExtents = [
       xAccessor(data[data.length - 50]),
