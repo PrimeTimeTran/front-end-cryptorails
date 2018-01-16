@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    // this.createSocket();
+    this.createSocket();
     const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
     const doUpdate = this.update;
 
