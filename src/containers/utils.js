@@ -16,8 +16,11 @@ function parseData(parse) {
 const parseDate = timeParse("%Y-%m-%d");
 
 export function getData() {
-	const promiseMSFT = fetch("//raw.githubusercontent.com/PrimeTimeTran/front-end-cryptorails/master/src/data/prices.tsv")
-		.then(response => response.text())
-		.then(data => tsvParse(data, parseData(parseDate)))
+	const promiseMSFT = fetch("http://localhost:3000")
+	.then((response) => response.json())
+	.then(function(data) {
+		data.columns = ["date", "open", "close", "low", "high"]
+		return data
+	})
 	return promiseMSFT;
 }
