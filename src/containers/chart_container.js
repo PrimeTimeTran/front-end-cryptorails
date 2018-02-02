@@ -22,4 +22,8 @@ class ChartContainer extends React.Component {
 	}
 }
 
+const buttonStyle = {
+  visibility: 'hidden'
+};
+
 export default ChartContainer

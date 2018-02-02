@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ActionCable from "actioncable";
@@ -6,21 +7,25 @@ import ActionCable from "actioncable";
 import ChartContainer from '../containers/chart_container'
 import FeatureCoin from './feature_coin'
 import { fetchPrices } from '../actions/index'
+import NavbarNavigation from './navbar'
+import '../index.css'
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.update = this.update.bind(this);
+    this.updateCoins = this.updateCoins.bind(this);
     this.state = {
-      featureCoin: []
+      featureCoin: [],
+      chartPrices: []
     }
   }
 
   componentWillMount() {
     this.createSocket();
     const url = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
-    const doUpdate = this.update;
+    const doUpdate = this.updateCoins;
 
     fetch(url).then(function(response){
       return response.json();
@@ -35,32 +40,46 @@ class App extends Component {
 
     cable.subscriptions.create('PricesChannel', {
       connected: function() {
-        // console.log('Connected::PricesChannel: ', cable)
       },
       received: function(data) {
-        // console.log('Received::PricesChannel: ', data)
-        doUpdate(data.html)
+        doUpdate(JSON.parse(data))
       },
       disconnected: function(){
-        // console.log('Disconnected::PricesChannel: ');
       }
     });
   }
 
   update(data) {
     this.setState({
-      featureCoin: data
+      featureCoin: data,
+      chartPrices: data.chart
+    })
+  }
+
+  updateCoins(data) {
+    this.setState({
+      featureCoin: data,
     })
   }
 
   render() {
     return (
       <div className='container'>
-        <ChartContainer />
-        <FeatureCoin featureCoin={this.state.featureCoin.data}/>
+        <NavbarNavigation />
+          <FeatureCoin featureCoin={this.state.featureCoin.data} />
+          <ChartContainer />
+          <Button bsStyle="success" bsSize="small">Bitcoin</Button>
+          <Button bsStyle="primary" bsSize="small">Link</Button>
+        <Button style={buttonStyle}  bsSize="small">Default</Button>
       </div>
     );
   }
+}
+
+const buttonStyle = {
+  borderRadius: 4,
+  borderWidth: 0.5,
+  borderColor: '#d6d7da',
 }
 
 function mapStateToProps(state) {
@@ -73,4 +92,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ featureCoin: fetchPrices }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+const Main = connect(mapStateToProps, mapDispatchToProps)(App)
+
+export default Main;
