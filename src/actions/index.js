@@ -28,15 +28,13 @@ export function selectExchange(exchange) {
   console.log('Request', request);
   return {
     type: SELECT_EXCHANGE,
-    payload: request
+    payload: exchanges[pickedExchange - 1]
   }
 }
 
 function whichExchange(id) {
   const exchanges = ['Coinbase', 'Bitfinex', 'Bittrex']
 }
-
-
 
 // Select Coin
 export const SELECT_COIN = 'SELECT_COIN';
