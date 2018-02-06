@@ -7,12 +7,16 @@ const FeatureCoin = (props) => {
   return (
     <div className='container'>
       <table>
-        <tbody>
+      <thead>
           <tr>
+            <th>Exchange</th>
             <th>Coin</th>
             <th>Price(USD)</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
+            <td>{props.exchange}</td>
             <td>{props.featureCoin.base}</td>
             <td>{props.featureCoin.amount}</td>
           </tr>
@@ -21,5 +25,13 @@ const FeatureCoin = (props) => {
     </div>
   )
 }
+
+// function mapPropsToState(props) {
+//   return {
+//     featuredExchange: selectedExchange,
+//     featuredCoin: selectedCoin,
+//     coinPrice: selectedCoinPrice
+//   }
+// }
 
 export default FeatureCoin

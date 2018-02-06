@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ActionCable from "actioncable";
@@ -8,17 +7,21 @@ import ChartContainer from '../containers/chart_container'
 import FeatureCoin from './feature_coin'
 import { fetchPrices } from '../actions/index'
 import NavbarNavigation from './navbar'
+import Exchanges from '../containers/exchanges'
+
 import '../index.css'
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.update = this.update.bind(this);
     this.updateCoins = this.updateCoins.bind(this);
+    this.updateSelectedMarket = this.updateSelectedMarket.bind(this);
+
     this.state = {
+      chartPrices: [],
       featureCoin: [],
-      chartPrices: []
+      // selectedExchange: 'Coinbase'
     }
   }
 
@@ -62,29 +65,42 @@ class App extends Component {
     })
   }
 
+  updateSelectedMarket(market) {
+    const doUpdate = this.update;
+    const exchanges = ['Coinbase', 'Bitfinex', 'Bittrex']
+
+    function correctExchange(element) {
+      return element === market;
+    }
+
+    const pickedExchange = exchanges.findIndex(correctExchange) + 1
+    const url = `http://localhost:3000/home/${pickedExchange}`
+
+    fetch(url).then(function(response){
+      return response.json();
+    }).then(function(data){
+      // console.log('Data fetched from API:', data)
+      data.columns = ["date", "open", "close", "low", "high"]
+      doUpdate(data)
+    });
+  }
+
   render() {
     return (
       <div className='container'>
-        <NavbarNavigation />
-          <FeatureCoin featureCoin={this.state.featureCoin.data} />
+          <NavbarNavigation />
+          <FeatureCoin featureCoin={this.state.featureCoin.data} exchange={this.props.selectedExchange} />
           <ChartContainer />
-          <Button bsStyle="success" bsSize="small">Bitcoin</Button>
-          <Button bsStyle="primary" bsSize="small">Link</Button>
-        <Button style={buttonStyle}  bsSize="small">Default</Button>
+          <Exchanges />
       </div>
     );
   }
 }
 
-const buttonStyle = {
-  borderRadius: 4,
-  borderWidth: 0.5,
-  borderColor: '#d6d7da',
-}
-
 function mapStateToProps(state) {
   return {
-    featureCoin: state.featureCoin
+    featureCoin: state.featureCoin,
+    selectedExchange: state.selectedExchange
   }
 }
 

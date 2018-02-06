@@ -10,6 +10,7 @@ class ChartContainer extends React.Component {
 			this.setState({ data })
 		})
 	}
+
 	render() {
 		if (this.state == null) {
 			return <div>Loading...</div>
@@ -21,9 +22,5 @@ class ChartContainer extends React.Component {
 		)
 	}
 }
-
-const buttonStyle = {
-  visibility: 'hidden'
-};
 
 export default ChartContainer

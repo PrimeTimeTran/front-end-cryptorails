@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Navbar, NavItem, MenuItem, NavDropdown, Nav } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, NavItem, MenuItem, NavDropdown, Nav } from 'react-bootstrap';
 
 class NavbarNavigation extends React.Component {
   render() {
@@ -32,7 +32,7 @@ class NavbarNavigation extends React.Component {
   }
 }
 const navBarStyle = {
-  'flex-direction': 'row'
+  flexDirection: 'row'
 }
 
 export default NavbarNavigation;

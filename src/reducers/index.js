@@ -1,8 +1,17 @@
 import { combineReducers } from 'redux'
-import PriceReducer from './price_reducer'
+import SelectCoinReducer from './select_coin_reducer'
+import SelectExchangeReducer from './select_exchange_reducer'
 
 const rootReducer = combineReducers({
-  prices: PriceReducer
+  selectedExchange: SelectExchangeReducer,
+  selectedCoin: SelectCoinReducer,
+  selectedCoinPrice: 8000
 })
+
+
+const initialReducer = combineReducers({
+
+})
+
 
 export default rootReducer
