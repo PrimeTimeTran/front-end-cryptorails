@@ -2,5 +2,41 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: red;
+  background-color: #E71D36 !important;
+}
+
+.react-stockchart {
+  border-radius: 5px;
+}
+div.react-stockchart {
+  background-color: #EFEFEF;
+}
+
+label {
+  display: none !important;
+}
+select[name='type'] {
+  display: none !important;
+}
+.btn-group {
+  margin-bottom: 15px;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+table {
+  table-layout: fixed;
+}
+
+th {
+  padding-right: 20px;
+}
+
+table {
+  color: white;
 }

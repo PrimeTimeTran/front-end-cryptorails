@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // Select Exchange
 export const SELECT_EXCHANGE = 'SELECT_EXCHANGE';
 export function selectExchange(exchange) {
@@ -8,18 +6,19 @@ export function selectExchange(exchange) {
   function correctExchange(element) {
     return element === exchange;
   }
-  const pickedExchange = exchanges.findIndex(correctExchange) + 1
+  const pickedExchange = exchanges.findIndex(correctExchange)
 
   return {
     type: SELECT_EXCHANGE,
-    payload: exchanges[pickedExchange - 1]
+    payload: exchanges[pickedExchange]
   }
 }
 
-export const SELECTED_CHART = 'SELECTED_CHART'
+// Select ChartData
+export const SELECT_CHART = 'SELECTED_CHART'
 export function selectChartData(data) {
   return {
-    type: SELECTED_CHART,
+    type: SELECT_CHART,
     payload: data
   }
 }

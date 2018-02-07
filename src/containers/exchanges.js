@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectExchange, selectCoin, selectChartData } from '../actions/index'
 import { bindActionCreators } from 'redux'
-import { Button } from 'reactstrap'
+import { Button, ButtonGroup } from 'reactstrap'
 import axios from 'axios';
 
 class Exchanges extends Component {
   update(exchange) {
     const exchanges = ['Coinbase', 'Bitfinex', 'Bittrex']
     const correctExchange = (element) => element === exchange
-
     const pickedExchange = exchanges.findIndex(correctExchange) + 1
     const url = `http://localhost:3000/home/${pickedExchange}`
 
@@ -19,7 +18,7 @@ class Exchanges extends Component {
         return response.data
       });
     this.props.selectedExchange(exchange)
-    this.props.selectedCoin('ETH')
+    this.props.selectedCoin(exchanges[pickedExchange - 1])
     this.props.updateChartData(request)
   }
 
@@ -28,7 +27,7 @@ class Exchanges extends Component {
 
     return exchanges.map((exchange) => {
       return (
-        <Button style={buttonStyle} onClick={() => this.update(exchange)}>
+        <Button color="primary" style={buttonStyle} size="sm" onClick={() => this.update(exchange)}>
           {exchange}
         </Button>
       )
@@ -37,9 +36,9 @@ class Exchanges extends Component {
 
   render() {
     return (
-      <ul className='list-group'>
+      <ButtonGroup>
         {this.renderList()}
-      </ul>
+      </ButtonGroup>
     )
   }
 }
@@ -48,7 +47,8 @@ class Exchanges extends Component {
 const buttonStyle = {
   borderRadius: 4,
   borderWidth: 0.5,
-  borderColor: '#d6d7da',
+  borderColor: 'white',
+  marginRight: 5
 }
 
 function mapStateToProps(state) {

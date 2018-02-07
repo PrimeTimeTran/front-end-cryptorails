@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import ActionCable from "actioncable";
+import { bindActionCreators } from 'redux'
 
 import ChartContainer from '../containers/chart_container'
 import FeatureCoin from './feature_coin'
 import NavbarNavigation from './navbar'
 import Exchanges from '../containers/exchanges'
+import { getData } from "../containers/utils"
+import { selectChartData } from '../actions'
 
 import '../index.css'
 
@@ -14,13 +17,12 @@ class App extends Component {
     super(props);
     this.update = this.update.bind(this);
     this.updateCoins = this.updateCoins.bind(this);
-
     this.state = {
       featureCoin: []
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.createSocket();
     const url = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
     const doUpdate = this.updateCoins;
@@ -30,6 +32,20 @@ class App extends Component {
     }).then(function(data){
       doUpdate(data)
     });
+
+  }
+
+  update(data) {
+    this.setState({
+      featureCoin: data,
+      chartPrices: data.chart
+    })
+  }
+
+  updateChartData() {
+    const data = getData().then(data => {
+      return data
+    })
   }
 
   createSocket() {
@@ -47,13 +63,6 @@ class App extends Component {
     });
   }
 
-  update(data) {
-    this.setState({
-      featureCoin: data,
-      chartPrices: data.chart
-    })
-  }
-
   updateCoins(data) {
     this.setState({
       selectedExchange: data
@@ -62,11 +71,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <NavbarNavigation />
-        <FeatureCoin featureCoin={this.state.featureCoin.data} exchange={this.props.selectedExchange} />
-        <ChartContainer/>
-        <Exchanges />
+      <div>
+      <NavbarNavigation />
+        <div className='container'>
+          <div className="topBar">
+            <FeatureCoin featureCoin={this.state.featureCoin.data} exchange={this.props.selectedExchange} coin={this.props.selectedCoin}/>
+            <Exchanges />
+          </div>
+          <ChartContainer/>
+        </div>
       </div>
     );
   }
@@ -75,10 +88,17 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     featureCoin: state.featureCoin,
-    selectedExchange: state.selectedExchange
+    selectedExchange: state.selectedExchange,
+    selectedCoin: state.selectedCoin,
   }
 }
 
-const Main = connect(mapStateToProps)(App)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectChartData: selectChartData
+  }, dispatch)
+}
+
+const Main = connect(mapStateToProps, mapDispatchToProps)(App)
 
 export default Main;
