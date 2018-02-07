@@ -1,13 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectExchange } from '../actions/index'
+import { selectExchange, selectCoin, selectChartData } from '../actions/index'
 import { bindActionCreators } from 'redux'
 import { Button } from 'reactstrap'
+import axios from 'axios';
 
 class Exchanges extends Component {
-  constructor(props) {
-    super(props);
+  update(exchange) {
+    const exchanges = ['Coinbase', 'Bitfinex', 'Bittrex']
+    const correctExchange = (element) => element === exchange
 
+    const pickedExchange = exchanges.findIndex(correctExchange) + 1
+    const url = `http://localhost:3000/home/${pickedExchange}`
+
+    const request = axios.get(url)
+      .then(function (response){
+        response.data.columns = ['date', 'open', 'close', 'low', 'high']
+        return response.data
+      });
+    this.props.selectedExchange(exchange)
+    this.props.selectedCoin('ETH')
+    this.props.updateChartData(request)
   }
 
   renderList() {
@@ -15,7 +28,7 @@ class Exchanges extends Component {
 
     return exchanges.map((exchange) => {
       return (
-        <Button style={buttonStyle} onClick={() => this.props.selectedExchange(exchange)} >
+        <Button style={buttonStyle} onClick={() => this.update(exchange)}>
           {exchange}
         </Button>
       )
@@ -24,12 +37,13 @@ class Exchanges extends Component {
 
   render() {
     return (
-      <ul className="list-group">
+      <ul className='list-group'>
         {this.renderList()}
       </ul>
     )
   }
 }
+
 
 const buttonStyle = {
   borderRadius: 4,
@@ -49,6 +63,8 @@ function mapDispatchToProps(dispatch) {
   // Whenever selectExchange is called, result should be passed to all of our reducers
   return bindActionCreators({
     selectedExchange: selectExchange,
+    selectedCoin: selectCoin,
+    updateChartData: selectChartData
   }, dispatch)
 }
 

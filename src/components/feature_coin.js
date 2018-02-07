@@ -5,7 +5,9 @@ const FeatureCoin = (props) => {
     return <div>Fetching data.</div>
   }
   return (
+
     <div className='container'>
+    {console.log('FeatureCoin Data:', props.featureCoin)}
       <table>
       <thead>
           <tr>
@@ -25,13 +27,5 @@ const FeatureCoin = (props) => {
     </div>
   )
 }
-
-// function mapPropsToState(props) {
-//   return {
-//     featuredExchange: selectedExchange,
-//     featuredCoin: selectedCoin,
-//     coinPrice: selectedCoinPrice
-//   }
-// }
 
 export default FeatureCoin
