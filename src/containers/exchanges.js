@@ -18,7 +18,7 @@ class Exchanges extends Component {
         return response.data
       });
     this.props.selectedExchange(exchange)
-    this.props.selectedCoin(exchanges[pickedExchange - 1])
+    this.props.selectedCoin('BTC')
     this.props.updateChartData(request)
   }
 

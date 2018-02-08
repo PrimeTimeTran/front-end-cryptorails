@@ -9,6 +9,9 @@ import NavbarNavigation from './navbar'
 import Exchanges from '../containers/exchanges'
 import { getData } from "../containers/utils"
 import { selectChartData } from '../actions'
+import CoinSelector from './coin_selector'
+
+
 
 import '../index.css'
 
@@ -26,13 +29,18 @@ class App extends Component {
     this.createSocket();
     const url = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
     const doUpdate = this.updateCoins;
+    const update = this.props.selectChartData
 
     fetch(url).then(function(response){
       return response.json();
     }).then(function(data){
       doUpdate(data)
     });
-
+    getData().then(function (response) {
+      return response
+    }).then(function(data) {
+      update(data)
+    })
   }
 
   update(data) {
@@ -43,7 +51,7 @@ class App extends Component {
   }
 
   updateChartData() {
-    const data = getData().then(data => {
+    getData().then(data => {
       return data
     })
   }
@@ -79,6 +87,7 @@ class App extends Component {
             <Exchanges />
           </div>
           <ChartContainer/>
+          <CoinSelector />
         </div>
       </div>
     );

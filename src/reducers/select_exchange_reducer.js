@@ -4,6 +4,7 @@ export default function(state = 'Coinbase', action) {
   switch(action.type) {
   case SELECT_EXCHANGE:
     return action.payload
+  default:
+    return state
   }
-  return state
 }

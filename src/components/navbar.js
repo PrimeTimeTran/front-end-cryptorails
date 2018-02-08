@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavItem, MenuItem, Nav } from 'react-bootstrap';
+import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
 class NavbarNavigation extends React.Component {
   render() {
@@ -8,7 +8,7 @@ class NavbarNavigation extends React.Component {
         <Navbar style={navBarSpacingStyle}>
           <Navbar.Header>
             <Navbar.Brand href='#'>
-              <img src={require("./logo.png")}/>
+              <img src={require("./logo.png")} alt=''/>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav style={navBarStyle}>
